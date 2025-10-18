@@ -1,6 +1,7 @@
 package classes.Storage;
 
 import classes.Expenses.Expense;
+import classes.Expenses.ExpenseManager;
 import java.io.*;
 import java.util.*;
 
@@ -24,7 +25,7 @@ class Storage {
         }
     }
 
-    public List<Expense> loadExpenses() throws IOException {
+    public ExpenseManager loadExpenses() throws IOException {
         List<Expense> expenses = new ArrayList<>();
         try (
             BufferedReader reader = new BufferedReader(
@@ -41,7 +42,8 @@ class Storage {
                 expenses.add(new Expense(amount, name, category));
             }
         }
-        return expenses;
+        ExpenseManager expenseManager = new ExpenseManager(expenses);
+        return expenseManager;
     }
 
     public void saveExpenses(List<Expense> expenses) throws IOException {
