@@ -8,10 +8,10 @@ public class UI {
 
     private JFrame frame;
     private JButton button;
+    private JLabel label;
 
     public UI() {
-        frame = new JFrame("TestFrame");
-        button = new JButton("Click Me");
+        frame = new JFrame("Personal Finance Tracker");
         frame.setSize(400, 300);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,6 +28,13 @@ public class UI {
         button.addActionListener(action);
         button.setPreferredSize(scale);
         frame.add(button);
+        frame.pack();
+    }
+
+    public void createLabel(String text, Dimension scale) {
+        JLabel label = new JLabel(text);
+        label.setPreferredSize(scale);
+        frame.add(label);
         frame.pack();
     }
 }
