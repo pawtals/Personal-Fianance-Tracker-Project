@@ -15,7 +15,6 @@ public class UI {
         frame.setSize(400, 300);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         frame.setLayout(new FlowLayout());
     }
 
@@ -24,7 +23,7 @@ public class UI {
         Dimension scale,
         ActionListener action
     ) {
-        JButton button = new JButton(text);
+        button = new JButton(text);
         button.addActionListener(action);
         button.setPreferredSize(scale);
         frame.add(button);
@@ -32,7 +31,7 @@ public class UI {
     }
 
     public void createLabel(String text, Dimension scale) {
-        JLabel label = new JLabel(text);
+        label = new JLabel(text);
         label.setPreferredSize(scale);
         frame.add(label);
         frame.pack();
