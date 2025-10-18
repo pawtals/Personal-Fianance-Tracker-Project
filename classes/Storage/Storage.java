@@ -31,7 +31,7 @@ class Storage {
                 new FileReader(storageFile)
             )
         ) {
-            reader.readLine();
+            reader.readLine(); // skip header
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",", 3);
