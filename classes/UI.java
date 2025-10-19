@@ -6,34 +6,45 @@ import javax.swing.*;
 
 public class UI {
 
-    private JFrame frame;
+    public JFrame frame;
     private JButton button;
     private JLabel label;
+    private JTextField textField;
+    private JScrollPane scrollPane;
+    public JPanel sidePanel, topPanel, searchPanel;
 
     public UI() {
         frame = new JFrame("Personal Finance Tracker");
-        frame.setSize(400, 300);
+        frame.setSize(800, 600);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new FlowLayout());
+        frame.setLayout(new BorderLayout());
+
+        topPanel = new JPanel();
+        frame.add(topPanel, BorderLayout.CENTER);
+
+        sidePanel = new JPanel();
+        frame.add(sidePanel, BorderLayout.WEST);
+
+        searchPanel = new JPanel();
+        frame.add(searchPanel, BorderLayout.CENTER);
     }
 
     public void createButton(
         String text,
         Dimension scale,
-        ActionListener action
+        ActionListener action,
+        JPanel panel
     ) {
         button = new JButton(text);
         button.addActionListener(action);
         button.setPreferredSize(scale);
-        frame.add(button);
-        frame.pack();
+        panel.add(button);
     }
 
-    public void createLabel(String text, Dimension scale) {
+    public void createLabel(String text, Dimension scale, JPanel panel) {
         label = new JLabel(text);
         label.setPreferredSize(scale);
-        frame.add(label);
-        frame.pack();
+        panel.add(label);
     }
 }
