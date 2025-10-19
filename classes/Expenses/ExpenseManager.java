@@ -1,19 +1,23 @@
 package classes.Expenses;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.time.*;
+import java.util.LinkedList;
 
 public class ExpenseManager {
 
-    public List<Expense> expenses;
+    public LinkedList<Expense> expenses;
 
-    public ExpenseManager(Expense[] loadstate) {
-        this.expenses = new ArrayList<>(Arrays.asList(loadstate));
+    public ExpenseManager() {
+        this.expenses = new LinkedList<>();
     }
 
     public void NewExpense(String name, int amount, String[] categories) {
-        Expense expense = new Expense(amount, name, categories);
+        Expense expense = new Expense(
+            amount,
+            name,
+            categories,
+            LocalDate.now()
+        );
         this.expenses.addLast(expense);
     }
 
