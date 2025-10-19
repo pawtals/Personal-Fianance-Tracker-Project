@@ -11,7 +11,7 @@ public class ExpenseManager {
         this.expenses = new LinkedList<>();
     }
 
-    public void NewExpense(String name, int amount, String[] categories) {
+    public void NewExpense(String name, int amount, String categories) {
         Expense expense = new Expense(
             amount,
             name,

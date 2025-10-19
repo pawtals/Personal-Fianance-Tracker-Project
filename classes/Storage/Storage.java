@@ -39,7 +39,7 @@ class Storage {
                 String[] parts = line.split(",", 4);
                 int amount = Integer.parseInt(parts[0]);
                 String name = parts[1];
-                String[] category = parts[2].split(";");
+                String category = parts[2];
                 LocalDate date = LocalDate.parse(parts[3]);
                 expenses.add(new Expense(amount, name, category, date));
             }
@@ -63,7 +63,7 @@ class Storage {
                         "," +
                         e.name +
                         "," +
-                        String.join(";", e.category) +
+                        e.category +
                         "," +
                         e.date.toString()
                 );
