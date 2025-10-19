@@ -1,7 +1,6 @@
 package classes.Storage;
 
-import classes.Expenses.Expense;
-import classes.Expenses.ExpenseManager;
+import classes.Expenses.*;
 import java.io.*;
 import java.time.*;
 import java.util.*;
@@ -56,7 +55,7 @@ class Storage {
         try (
             PrintWriter writer = new PrintWriter(new FileWriter(storageFile))
         ) {
-            writer.println("amount,name,category");
+            writer.println("amount,name,category,date");
             for (Expense e : expenses) {
                 writer.println(
                     e.amount +
