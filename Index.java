@@ -1,23 +1,15 @@
 import classes.Expenses.ExpenseManager;
 import classes.UI;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
 class Index {
 
     public static void main(String[] args) {
         UI ui = new UI();
-        ui.createLabel("Personal Finance Tracker", new Dimension(400, 30));
-        ui.createButton(
-            "Add Transaction",
-            new Dimension(400, 30),
-            (e -> System.out.println("Button clicked"))
-        );
-        ExpenseManager exm = new ExpenseManager();
-        ui.createButton(
-            "testNewButton",
-            new Dimension(400, 30),
-            (e -> System.out.println("it works"))
-        );
+        ui.createLabel("Side", new Dimension(200, 30), ui.sidePanel);
+        ui.createLabel("Search", new Dimension(200, 30), ui.searchPanel);
+        ui.createLabel("Top", new Dimension(200, 30), ui.topPanel);
     }
 }
