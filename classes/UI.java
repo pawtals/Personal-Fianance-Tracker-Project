@@ -21,7 +21,7 @@ public class UI {
         frame.setLayout(new BorderLayout());
 
         topPanel = new JPanel();
-        frame.add(topPanel, BorderLayout.CENTER);
+        frame.add(topPanel, BorderLayout.NORTH);
 
         sidePanel = new JPanel();
         frame.add(sidePanel, BorderLayout.WEST);
