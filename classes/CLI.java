@@ -34,6 +34,28 @@ public class CLI {
                     String cat = scanner.nextLine();
                     this.exm.NewExpense(nme, amt, cat);
                     break;
+                case "del":
+                    boolean doneSignal = false;
+                    List<Integer> indexes = new ArrayList<>();
+                    while (!doneSignal) {
+                        print(
+                            "Add index of transaction to be removed | Enter -1 to exit"
+                        );
+                        int index = scanner.nextInt();
+                        scanner.nextLine();
+                        if (index == -1) {
+                            if (indexes.size() > 0) {
+                                indexes.sort(Collections.reverseOrder());
+                                for (int i = 0; i < indexes.size(); i++) {
+                                    exm.DeleteExpense(indexes.get(i));
+                                }
+                            }
+                            doneSignal = true;
+                        } else {
+                            indexes.add(index);
+                        }
+                    }
+                    break;
                 case "list":
                     LinkedList<Expense> expenses = exm.expenses;
                     for (int i = 0; i < expenses.size(); i++) {
