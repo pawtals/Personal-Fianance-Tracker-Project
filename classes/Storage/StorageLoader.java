@@ -5,11 +5,11 @@ import java.io.*;
 import java.time.*;
 import java.util.*;
 
-class Storage {
+public class StorageLoader {
 
     private File storageFile;
 
-    public Storage() {
+    public StorageLoader() {
         initializeStorageFile();
     }
 

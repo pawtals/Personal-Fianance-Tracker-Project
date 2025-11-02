@@ -15,7 +15,7 @@ public class Sorter {
         UpdateEntries();
     }
 
-    public Hashmap<String, ArrayList<Integer>> UpdateEntries() {
+    public HashMap<String, ArrayList<Integer>> UpdateEntries() {
         LinkedList<Expense> newExpenses = this.linkedManager.expenses;
         this.categoryMap.clear();
         for (int i = 0; i < newExpenses.size(); i++) {
@@ -27,7 +27,7 @@ public class Sorter {
                 this.categoryMap.put(newExpenses.get(i).category, previous);
             }
         }
-        return this.category;
+        return this.categoryMap;
     }
 
     /*
