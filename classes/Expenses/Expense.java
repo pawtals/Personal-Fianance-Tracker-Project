@@ -16,4 +16,17 @@ public class Expense {
         this.category = category;
         this.date = date;
     }
+
+    public String toString() {
+        return (
+            ". [" +
+            this.amount +
+            "$ - " +
+            this.name +
+            " - " +
+            this.category +
+            "] On: " +
+            this.date.toString()
+        );
+    }
 }
