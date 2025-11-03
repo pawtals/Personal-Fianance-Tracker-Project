@@ -114,6 +114,84 @@ public class CLI {
                         }
                     }
                     break;
+                case "sort:date:day":
+                    print("enter date [YYYY-MM-DD]");
+                    String dateStr = scanner.nextLine();
+                    try {
+                        LocalDate searchDate = LocalDate.parse(dateStr);
+                        ArrayList<Integer> dayIndices = sorter.GetExpensesByDay(
+                            searchDate
+                        );
+
+                        if (dayIndices.isEmpty()) {
+                            print("no expenses on" + searchDate);
+                        } else {
+                            for (int index : dayIndices) {
+                                Expense exp = exm.expenses.get(index);
+                                print("  " + index + ". " + exp);
+                            }
+                            print("found " + dayIndices.size() + " expenses");
+                        }
+                    } catch (Exception e) {
+                        print(
+                            "invalid string, string couldn't be parsed to date"
+                        );
+                    }
+                    break;
+                case "sort:date:month":
+                    print("enter year [XXXX]:");
+                    int monthYear = scanner.nextInt();
+                    scanner.nextLine();
+                    print("enter month  [1-12]:");
+                    int monthNum = scanner.nextInt();
+                    scanner.nextLine();
+                    try {
+                        Month searchMonth = Month.of(monthNum);
+                        ArrayList<Integer> monthIndices =
+                            sorter.GetExpensesByMonth(monthYear, searchMonth);
+
+                        if (monthIndices.isEmpty()) {
+                            print(
+                                "no expenses on " +
+                                    searchMonth +
+                                    "-" +
+                                    monthYear
+                            );
+                        } else {
+                            print(
+                                "\nexpenses in " + searchMonth + " " + monthYear
+                            );
+                            for (int index : monthIndices) {
+                                Expense exp = exm.expenses.get(index);
+                                print("  " + index + ". " + exp);
+                            }
+                            print("found " + monthIndices.size() + " expenses");
+                        }
+                    } catch (Exception e) {
+                        print("invalid month or year given");
+                    }
+
+                    break;
+                case "sort:date:year":
+                    print("enter year [XXXX]:");
+                    int searchYear = scanner.nextInt();
+                    scanner.nextLine();
+
+                    ArrayList<Integer> yearIndices = sorter.GetExpensesByYear(
+                        searchYear
+                    );
+
+                    if (yearIndices.isEmpty()) {
+                        print("no expenses in " + searchYear);
+                    } else {
+                        print("\nexpenses in " + searchYear + "");
+                        for (int index : yearIndices) {
+                            Expense exp = exm.expenses.get(index);
+                            print("  " + index + ". " + exp);
+                        }
+                        print("found " + yearIndices.size() + " expenses");
+                    }
+                    break;
             }
         }
     }

@@ -1,19 +1,20 @@
 package classes.Methods;
 
 import classes.Expenses.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class Sorter {
 
     private ExpenseManager linkedManager;
     private HashMap<String, ArrayList<Integer>> categoryMap;
+    private DateTreeNode dateTree;
 
     public Sorter(ExpenseManager manager) {
         this.linkedManager = manager;
         this.categoryMap = new HashMap<>();
+        this.dateTree = new DateTreeNode("Root", DateTreeNode.NodeType.YEAR);
         UpdateEntries();
     }
 
@@ -34,7 +35,98 @@ public class Sorter {
                 this.categoryMap.put(category, newList);
             }
         }
+        BuildDateTree();
         return this.categoryMap;
+    }
+
+    private void BuildDateTree() {
+        this.dateTree = new DateTreeNode("Root", DateTreeNode.NodeType.YEAR);
+        LinkedList<Expense> expenses = this.linkedManager.expenses;
+
+        for (int i = 0; i < expenses.size(); i++) {
+            Expense expense = expenses.get(i);
+            LocalDate date = expense.date; // Assumes Expense has a LocalDate field
+
+            // Extract year, month, day
+            String year = String.valueOf(date.getYear());
+            String month = date.getMonth().toString() + " " + date.getYear();
+            String day = date.format(
+                DateTimeFormatter.ofPattern("MMM dd, yyyy")
+            );
+
+            // Navigate/create the tree path: Root -> Year -> Month -> Day
+            DateTreeNode yearNode = dateTree.getOrCreateChild(
+                year,
+                DateTreeNode.NodeType.YEAR
+            );
+            DateTreeNode monthNode = yearNode.getOrCreateChild(
+                month,
+                DateTreeNode.NodeType.MONTH
+            );
+            DateTreeNode dayNode = monthNode.getOrCreateChild(
+                day,
+                DateTreeNode.NodeType.DAY
+            );
+
+            // Add expense index to the day node
+            dayNode.addExpenseIndex(i);
+        }
+    }
+
+    public DateTreeNode GetDateTree() {
+        return this.dateTree;
+    }
+
+    public ArrayList<Integer> GetExpensesByYear(int year) {
+        DateTreeNode yearNode = dateTree
+            .getChildren()
+            .get(String.valueOf(year));
+        if (yearNode == null) {
+            return new ArrayList<>();
+        }
+        return yearNode.getAllExpenseIndices();
+    }
+
+    public ArrayList<Integer> GetExpensesByMonth(int year, Month month) {
+        String yearKey = String.valueOf(year);
+        String monthKey = month.toString() + " " + year;
+
+        DateTreeNode yearNode = dateTree.getChildren().get(yearKey);
+        if (yearNode == null) {
+            return new ArrayList<>();
+        }
+
+        DateTreeNode monthNode = yearNode.getChildren().get(monthKey);
+        if (monthNode == null) {
+            return new ArrayList<>();
+        }
+
+        return monthNode.getAllExpenseIndices();
+    }
+
+    public ArrayList<Integer> GetExpensesByDay(LocalDate date) {
+        String year = String.valueOf(date.getYear());
+        String month = date.getMonth().toString() + " " + date.getYear();
+        String day = date.format(DateTimeFormatter.ofPattern("MMM dd, yyyy"));
+
+        DateTreeNode yearNode = dateTree.getChildren().get(year);
+        if (yearNode == null) return new ArrayList<>();
+
+        DateTreeNode monthNode = yearNode.getChildren().get(month);
+        if (monthNode == null) return new ArrayList<>();
+
+        DateTreeNode dayNode = monthNode.getChildren().get(day);
+        if (dayNode == null) return new ArrayList<>();
+
+        return dayNode.getExpenseIndices();
+    }
+
+    public LinkedList<Expense> SortByDate() {
+        LinkedList<Expense> sorted = new LinkedList<>(
+            this.linkedManager.expenses
+        );
+        sorted.sort(Comparator.comparing(e -> e.date));
+        return sorted;
     }
 
     public LinkedHashMap<String, ArrayList<Integer>> SortByCategory() {
